@@ -30,7 +30,7 @@ install:
  - npm run build
 # start up the server
 script:
-  - nohup npm run start
+  - nohup npm run start &
   # Sometime the server takes times to start up so we will stop the execution
   # for 3 seconds and we will continue executing scripts
   - sleep 3
