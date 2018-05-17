@@ -1,0 +1,37 @@
+language: node_js
+# Version of node
+node_js:
+  - "8"
+# Specify the operating system. Small OS of linux
+dist: trusty
+# Number of services
+services:
+  - mongodb
+  - redis-server
+env:
+  # Check lecture 130
+  - NODE_ENV=ci PORT=3000
+# All the time we commit the code from github, it downloads all the code.
+# But with node_modules when it download once it does not need to download again all
+# So when we run npm install and it sees that the packages exist is not going to
+# download. With that we will speed up
+# Course 125
+cache:
+  directories:
+    - node_modules
+    - client/node_modules
+# List of commands that we want to execute in the command line
+# It is our job to get our project ready to be executed inside of that 
+# virtual machine
+install:
+  # Install all the dependencies
+ - npm install
+ # Create our bundle of react
+ - npm run build
+# start up the server
+script:
+  - nohup npm run start
+  # Sometime the server takes times to start up so we will stop the execution
+  # for 3 seconds and we will continue executing scripts
+  - sleep 3
+  - npm run test
